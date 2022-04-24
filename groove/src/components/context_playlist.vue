@@ -24,18 +24,42 @@ $bus.reg('open_context_playlist', function (x, y) {
 //   left.value = x
 //   top.value = y
 // })
-// function to_current() {
-//   // active.value = false
-//   res = 'current'
-//   // console.log('cur');
-// }
+function to_current() {
+  // active.value = false
+  // console.log('cur');
+  //if rejfn() reject reason is undefined and if(err) is false
+  rejfn('current')
+  console.log('to current')
+  $bus.emit('play_selected')
+}
 // function to_like(){
 // }
-// function to_new(){
-//   // $bus.emit('open_modal_playlist')
-//   // active.value = false
-//   res='new'
-// }
+async function to_new(){
+  rejfn('new')
+  // active.value = false
+  // res='new'
+  var [err,res]= await $bus.activity.open_modal_playlist().to()//.then(v=>console.log('side'+v)).catch(e=>console.log(e))
+  if(err)console.log(err)
+  else{
+    // console.log(res);
+    var [err2,res2] = await $bus.activity.playlist_add(res.name,res.desc).to()
+    if(err2)console.log(err2)
+    else{
+      // console.log(res2)
+      // router.push({
+      //   name:"playlist",
+      //   params:{
+      //     name:res2
+      //   }
+      // })
+      var [err3,res3] = await $bus.activity.playlist_insert('insertMany',res.name).to()
+      if(err3)console.log(err2)
+      else{
+        console.log('insert to '+res.name+ ' musics')
+      }
+    }
+  }
+}
 function to_playlist(item) {
   // active.value=false
   res = item.name
@@ -59,10 +83,10 @@ function close(){
     :class="{ 'context_show': active }"
     :style="{ left: left + 'px', top: top + 'px' }"
   >
-    <!-- <div @click="to_current">正在播放</div> -->
-    <!-- <div @click="to_new">新的歌单</div> -->
-    <div v-for="item in items" :key="item.name" @click="to_playlist(item)">{{ item.name }}</div>
+    <div @click="to_current">正在播放</div>
+    <div @click="to_new">新的歌单</div>
     <!-- <div @click="like">我喜欢的</div> -->
+    <div v-for="item in items" :key="item.name" @click="to_playlist(item)">{{ item.name }}</div>
     <hr />
   </div>
 </template>

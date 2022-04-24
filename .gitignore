@@ -24,3 +24,5 @@ package-lock.json
 
 # Database file
 *.db
+
+config.json

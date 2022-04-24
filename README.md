@@ -1,7 +1,7 @@
 # Groove-node-vue
 A project, can play songs, store and sort song in playlists, like a local version of common online music player, mainly inspired from Groove in win10, focuses on music play and playlist.
 
-This is a two-in-one project.
+This is a two-in-one Client/Server project.
 
 Backend is a node server based on koa, program koa middlewares to handle requests, communicate between frontend and database.
 
@@ -14,11 +14,10 @@ It's highly recommended to separate and use two different ports in development, 
 Requires node, npm, sqlite3 installed.
 ```
 sqlite3 mp.db < mp.sql
+npm install
 cd groove
 npm install
 vite build
-cd ..
-npm install
 ```
 
 ## Run project
@@ -31,6 +30,7 @@ or
 node app.js
 ```
 App will run at port 8080, open your browser and go to localhost:8080,if everything goes right, you will see this SPA(single page app) running.But wait! Where are my songs?
+
 Don't worry, go to settings, the cog in sidemenu, and tell app folders where you store your downloaded songs, then you will see them.
 
 
@@ -38,6 +38,3 @@ Don't worry, go to settings, the cog in sidemenu, and tell app folders where you
 
 Sqls and js are not fully tested, bugs may emerge especially you add one song to a playlist twice.
 
-## Further
-
-Setup and run really sucks, call for an electron version.
